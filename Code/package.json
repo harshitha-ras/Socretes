@@ -1,0 +1,166 @@
+{
+  "name": "socretes",
+  "displayName": "Socretes - Socratic Coding Assistant",
+  "description": "A Socratic coding tutor that helps students learn through guided questioning",
+  "version": "0.0.1",
+  "publisher": "socretes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/socretes"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Education",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "socretes.explainCode",
+        "title": "Socretes: Explain This Code"
+      },
+      {
+        "command": "socretes.helpStart",
+        "title": "Socretes: Help Me Start"
+      },
+      {
+        "command": "socretes.debugThis",
+        "title": "Socretes: Debug This"
+      },
+      {
+        "command": "socretes.reviewCode",
+        "title": "Socretes: Review My Code"
+      },
+      {
+        "command": "socretes.openSidebar",
+        "title": "Socretes: Open Sidebar"
+      },
+      {
+        "command": "socretes.newSession",
+        "title": "Socretes: Start New Session"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "socretes.explainCode",
+          "group": "socretes@1"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "socretes.helpStart",
+          "group": "socretes@2"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "socretes.debugThis",
+          "group": "socretes@3"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "socretes.reviewCode",
+          "group": "socretes@4"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "socretes-sidebar",
+          "title": "Socretes",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "socretes-sidebar": [
+        {
+          "type": "webview",
+          "id": "socretes.sidebarView",
+          "name": "Socratic Assistant",
+          "contextualTitle": "Socretes"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Socretes",
+      "properties": {
+        "socretes.anthropicApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your Anthropic API key for Claude",
+          "order": 1
+        },
+        "socretes.modelName": {
+          "type": "string",
+          "default": "claude-sonnet-4-5-20250929",
+          "description": "Claude model to use",
+          "enum": [
+            "claude-sonnet-4-5-20250929",
+            "claude-haiku-4-5-20251001",
+            "claude-opus-4-1-20250805",
+            "claude-3-haiku-20240307"
+          ],
+          "order": 2
+        },
+        "socretes.teachingLevel": {
+          "type": "string",
+          "default": "balanced",
+          "description": "Controls how much guidance the bot provides",
+          "enum": [
+            "strict",
+            "balanced",
+            "helpful"
+          ],
+          "enumDescriptions": [
+            "Strict Socratic - Never gives answers, only questions. Best for advanced students.",
+            "Balanced - Provides hints when stuck, gives answers after multiple questions. Good for most students.",
+            "Helpful - More willing to explain directly when student is struggling. Best for beginners."
+          ],
+          "order": 3
+        },
+        "socretes.lockTeachingLevel": {
+          "type": "boolean",
+          "default": false,
+          "scope": "resource",
+          "description": "Lock the teaching level to workspace setting (prevents students from changing it in user settings). Professors should set this to true in .vscode/settings.json",
+          "order": 4
+        },
+        "socretes.instructorConstraints": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "Custom instructions from the instructor (e.g., 'Do not provide PyTorch code', 'Focus on recursion only', 'No array methods'). These constraints are added to every conversation.",
+          "order": 5,
+          "editPresentation": "multilineText"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.x",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0"
+  }
+}
