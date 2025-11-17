@@ -2,6 +2,8 @@
 
 Socretes is a VS Code extension that helps students learn programming through Socratic questioning instead of giving direct answers. It acts as a patient coding tutor that guides students to discover solutions themselves.
 
+![Demo Image](demo.png)
+
 ## Features
 
 Socretes provides 4 distinct learning modes, all accessible from the right-click context menu when you have code selected:
